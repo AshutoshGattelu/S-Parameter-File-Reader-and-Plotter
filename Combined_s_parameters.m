@@ -58,16 +58,16 @@ freq = data.Freq;
 marker_freqs = [2.4e9, 4e9, 6e9, 8e9];
 
 % Magnitude S11
-plotSParametersWithMarkers(freq, s11_combined, 'S11', marker_freqs);
+plotSParametersWithMarkers(freq, s11_combined, 'S11', marker_freqs, -13);
 
 % Magnitude S21
-plotSParametersWithMarkers(freq, s21_combined, 'S21', marker_freqs);
+plotSParametersWithMarkers(freq, s21_combined, 'S21', marker_freqs, -8);
 
 % Magnitude S12
-plotSParametersWithMarkers(freq, s12_combined, 'S12', marker_freqs);
+plotSParametersWithMarkers(freq, s12_combined, 'S12', marker_freqs, -8);
 
 % Magnitude S22
-plotSParametersWithMarkers(freq, s22_combined, 'S22', marker_freqs);
+plotSParametersWithMarkers(freq, s22_combined, 'S22', marker_freqs, -13);
 
 
 
