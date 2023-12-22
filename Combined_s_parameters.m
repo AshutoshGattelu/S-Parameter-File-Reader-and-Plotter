@@ -55,22 +55,26 @@ end
 freq = data.Freq;
 
 % Defining frequencies for markers
-marker_freqs = [2.4e9, 4e9, 6e9, 8e9];
+marker_freqs = [2.4, 4, 6, 8];
+
 
 % Magnitude S11
-plotSParametersWithMarkers(freq, s11_combined, 'S11', marker_freqs, -13);
+plotSParametersWithMarkers(freq/1e9, s11_combined, 'S11', marker_freqs,-13);
 
 % Magnitude S21
-plotSParametersWithMarkers(freq, s21_combined, 'S21', marker_freqs, -8);
+plotSParametersWithMarkers(freq/1e9, s21_combined, 'S21', marker_freqs, -8);
 
 % Magnitude S12
-plotSParametersWithMarkers(freq, s12_combined, 'S12', marker_freqs, -8);
+plotSParametersWithMarkers(freq/1e9, s12_combined, 'S12', marker_freqs, -8);
 
 % Magnitude S22
-plotSParametersWithMarkers(freq, s22_combined, 'S22', marker_freqs, -13);
+plotSParametersWithMarkers(freq/1e9, s22_combined, 'S22', marker_freqs, -13);
 
-
-
+figure;
+plot(freq/1e9, angle(s21_combined)*180/pi);
+xline([2.4, 8], '--black', 'LineWidth', 1.5);
+grid on;
+title('S21 Phase (degrees)');
 
 
 
@@ -192,7 +196,7 @@ plotSParametersWithMarkers(freq, s22_combined, 'S22', marker_freqs, -13);
 % plot(freq, angle(s22_combined)*180/pi);
 % title('S22 Phase (degrees)');
 % 
-% % Add labels and legend if needed
+% Add labels and legend if needed
 % xlabel('Frequency (Hz)');
 % ylabel('Phase (degrees)');
 % legend('1L-1', '1L-2', '1L-3', '1L-4');
