@@ -56,26 +56,60 @@ freq = data.Freq;
 
 % Defining frequencies for markers
 marker_freqs = [2.4, 4, 6, 8];
-
-
-% Magnitude S11
-plotSParametersWithMarkers(freq/1e9, s11_combined, 'S11', marker_freqs,-13);
-
+% 
+% 
+% % Magnitude S11
+% plotSParametersWithMarkers(freq/1e9, s11_combined, 'S11', marker_freqs,-13);
+% 
 % Magnitude S21
 plotSParametersWithMarkers(freq/1e9, s21_combined, 'S21', marker_freqs, -8);
-
-% Magnitude S12
-plotSParametersWithMarkers(freq/1e9, s12_combined, 'S12', marker_freqs, -8);
-
-% Magnitude S22
-plotSParametersWithMarkers(freq/1e9, s22_combined, 'S22', marker_freqs, -13);
+% 
+% % Magnitude S12
+% plotSParametersWithMarkers(freq/1e9, s12_combined, 'S12', marker_freqs, -8);
+% 
+% % Magnitude S22
+% plotSParametersWithMarkers(freq/1e9, s22_combined, 'S22', marker_freqs, -13);
 
 figure;
-plot(freq/1e9, angle(s21_combined)*180/pi);
-xline([2.4, 8], '--black', 'LineWidth', 1.5);
+
+% plot(freq/1e9, angle(s21_combined)*180/pi);
 grid on;
+hold on;
+ang = angle(s21_combined)*180/pi;
+for p = 1:size(s21_combined, 2)
+    plot(freq/1e9, (ang(:, p)) , 'Color', getColor(p), 'LineWidth', 1);
+end
+% xlim([0 11.1])
+ylim([-200 200]);
+xline([2.4, 8], '-- r', 'LineWidth', 2);
 title('S21 Phase (degrees)');
 
+% Calculate phase differences relative to '1L-1'
+reference_phase = angle(s21_combined(:, 1));
+phase_diff = angle(s21_combined) - reference_phase;
+
+% Wrap the phase differences to the range -180 to 180 degrees
+phase_diff_wrapped = wrapTo180(phase_diff * (180 / pi));
+
+% Plotting
+figure;
+grid on;
+hold on;
+for m = 1:size(phase_diff_wrapped, 2)
+    plot(freq/1e9, (phase_diff_wrapped(:, m)), 'Color', getColor(m), 'LineWidth', 1);
+end
+freq_mask = [2.4, 8];
+fill([freq_mask(1), freq_mask(1), freq_mask(2), freq_mask(2)], [250, 145, 145, 250], 'k', 'FaceAlpha', 0.15);
+fill([freq_mask(1), freq_mask(1), freq_mask(2), freq_mask(2)], [-10, -180, -180, -10], 'k', 'FaceAlpha', 0.15);
+xlim([1, 11.1]);
+ylim([-180 250]);
+% xline([2.4, 8], '--black', 'LineWidth', 1.5);
+
+title('Phase Differences Relative to 1L-1 (degrees)');
+xlabel('Frequency (GHz)');
+ylabel('Phase Difference (degrees)');
+s_names={'1L-1', '1L-2', '1L-3', '1L-4'};
+legend(s_names, 'Location', 'southwest', 'Orientation', 'Horizontal');
 
 
 
